@@ -1,10 +1,4 @@
-use nom::{branch::alt, multi::many1, IResult};
-
 advent_of_code::solution!(1);
-
-const NUMBER_STRINGS: [&str; 9] = [
-    "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
-];
 
 pub fn part_one(input: &str) -> Option<u32> {
     let sum = input
@@ -33,7 +27,7 @@ pub fn is_digit(c: char) -> bool {
     c.is_ascii_digit()
 }
 
-fn parse_line(mut line: &str) -> Result<u32, String> {
+fn parse_line(line: &str) -> Result<u32, String> {
     let mut digits = vec![];
     for (i, c) in line.chars().enumerate() {
         if c.is_ascii_digit() {
@@ -67,24 +61,6 @@ fn parse_line(mut line: &str) -> Result<u32, String> {
         .map_err(|e| e.to_string())?;
 
     Ok(number)
-}
-
-fn parse_digit_char(line: &str) -> IResult<&str, &str> {
-    nom::character::complete::digit1(line)
-}
-
-fn parse_digit_word(line: &str) -> IResult<&str, &str> {
-    nom::branch::alt((
-        nom::bytes::complete::tag("one"),
-        nom::bytes::complete::tag("two"),
-        nom::bytes::complete::tag("three"),
-        nom::bytes::complete::tag("four"),
-        nom::bytes::complete::tag("five"),
-        nom::bytes::complete::tag("six"),
-        nom::bytes::complete::tag("seven"),
-        nom::bytes::complete::tag("eight"),
-        nom::bytes::complete::tag("nine"),
-    ))(line)
 }
 
 pub fn part_two(input: &str) -> Option<u32> {
